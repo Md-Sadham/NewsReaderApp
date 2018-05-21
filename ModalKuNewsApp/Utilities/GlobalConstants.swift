@@ -12,7 +12,7 @@ class GlobalConstants: NSObject {
     
     // MARK: - Static Variables
     static let appDelegateRef : AppDelegate = UIApplication.shared.delegate as! AppDelegate
-    static let API_KEY = "?apiKey=8702c29943704f2d90e21933300ed21d"
+    static let API_KEY = "YOUR APIKEY HERE"
     static let BASE_URL = "https://newsapi.org/v2/"
     
     // MARK: - Enums
