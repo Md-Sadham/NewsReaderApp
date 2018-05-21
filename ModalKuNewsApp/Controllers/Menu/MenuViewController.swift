@@ -73,6 +73,12 @@ class MenuViewController: UIViewController {
             
             let nc = NotificationCenter.default
             nc.post(name: Notification.Name(rawValue: "MenuSelected"), object: nil, userInfo: dataDict)
+        case 2:
+            var dataDict = Dictionary<String, Any>()
+            dataDict["TabIndex"] = 2
+            
+            let nc = NotificationCenter.default
+            nc.post(name: Notification.Name(rawValue: "MenuSelected"), object: nil, userInfo: dataDict)
         default:
             return
         }
@@ -86,7 +92,7 @@ class MenuViewController: UIViewController {
 extension MenuViewController : UITableViewDelegate, UITableViewDataSource {
     // MARK: Table view delegates
     public func numberOfSections(in tableView: UITableView) -> Int{
-        return 2
+        return 3
     }// Default is 1 if not implemented
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
@@ -133,8 +139,8 @@ extension MenuViewController : UITableViewDelegate, UITableViewDataSource {
             cell.lblMenuOptionText.text = arrCategoryName[indexPath.row]
             cell.imgMenuOptionIcon.isHidden = false
             cell.imgMenuOptionIcon.image = UIImage.init(named: arrCategoryName[indexPath.row])
-            
-        default:
+          
+        case 1:
             cell.lblMenuOptionText.text = "Everything"
             cell.lblMenuOptionText.font = UIFont.boldSystemFont(ofSize: 16.0)
             cell.lblMenuOptionText.textColor = UIColor.black
@@ -150,6 +156,24 @@ extension MenuViewController : UITableViewDelegate, UITableViewDataSource {
             
             cell.imgMenuOptionIcon.isHidden = true
             cell.backgroundColor = UIColor.init(red: 231.0/255.0, green: 231.0/255.0, blue: 231.0/255.0, alpha: 1.0)
+        case 2:
+            cell.lblMenuOptionText.text = "BookMark"
+            cell.lblMenuOptionText.font = UIFont.boldSystemFont(ofSize: 16.0)
+            cell.lblMenuOptionText.textColor = UIColor.black
+            
+            if #available(iOS 11.0, *) {
+                cell.lblMenuOptionText.leadingAnchor.constraintEqualToSystemSpacingAfter(cell.imgMenuOptionIcon.leadingAnchor, multiplier: 0.0).isActive = true
+            } else {
+                // Fallback on earlier versions
+                let changeLeading = NSLayoutConstraint(item: cell.lblMenuOptionText, attribute: .leading, relatedBy: .equal, toItem: cell.imgMenuOptionIcon, attribute: .leading, multiplier: 1.0, constant: 0)
+                
+                NSLayoutConstraint.activate([changeLeading])
+            }
+            
+            cell.imgMenuOptionIcon.isHidden = true
+            cell.backgroundColor = UIColor.init(red: 231.0/255.0, green: 231.0/255.0, blue: 231.0/255.0, alpha: 1.0)
+        default:
+            break
         }
         
         return cell
@@ -157,5 +181,7 @@ extension MenuViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         callNotificationForMenuSelectedOrHidden(section: indexPath.section, selectedRow: indexPath.row, menuSwiped: false)
+        
+        tableView .deselectRow(at: indexPath, animated: true)
     }
 }

@@ -252,7 +252,7 @@ class EverythingViewController: UIViewController, UITextFieldDelegate, UIScrollV
             // 1b
             print("X POS: ", (GlobalConstants.ScreenSize.SCREEN_WIDTH * CGFloat(i)) + 8)
             let lblFlashNewsTitle = UILabel(frame: CGRect(x:(GlobalConstants.ScreenSize.SCREEN_WIDTH * CGFloat(i)) + 8, y:60, width:GlobalConstants.ScreenSize.SCREEN_WIDTH-16, height:30))
-            lblFlashNewsTitle.backgroundColor = UIColor.black.withAlphaComponent(0.5) //UIColor(red: 201, green: 219, blue: 220, alpha: 1.0)
+            lblFlashNewsTitle.backgroundColor = UIColor.black.withAlphaComponent(0.5)
             lblFlashNewsTitle.textColor = UIColor.white
             lblFlashNewsTitle.font = UIFont(name: "GillSans-Bold", size: 12)
             lblFlashNewsTitle.text = modalObj.title
@@ -491,6 +491,7 @@ extension EverythingViewController : UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard = GlobalConstants.getMainStoryboardInstance()
         let controller = storyboard.instantiateViewController(withIdentifier: "DetailVcId") as! DetailViewController
+        controller.redirectFromWhichPage = "Everything"
         controller.newsModalObj = arrNewsList[indexPath.row]
         
         self.navigationController?.pushViewController(controller, animated: true)

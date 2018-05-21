@@ -58,6 +58,7 @@ class NewsModal : NSObject {
                 
                 articleObj.dictArticleSource = dictArticleObj["source"] as? Dictionary<String, Any>
                 articleObj.articleSourceName = articleObj.dictArticleSource?["name"] as? String
+                articleObj.articleSourceId = articleObj.dictArticleSource?["id"] as? String // No need
                 
                 articleObj.authorName =  dictArticleObj["author"] as? String
                 articleObj.title = dictArticleObj["title"] as? String

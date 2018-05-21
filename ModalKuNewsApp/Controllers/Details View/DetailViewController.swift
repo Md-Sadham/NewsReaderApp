@@ -18,30 +18,85 @@ class DetailViewController: UIViewController {
     
     @IBOutlet weak var txtVwNewsDescription: UITextView!
     
+    @IBOutlet weak var btnBookmark: UIButton!
+    
+    @IBOutlet weak var layoutDescTxtvwBottom: NSLayoutConstraint!
+
+    var redirectFromWhichPage = ""
+    
     var newsModalObj : NewsModal?
+    
+    var bookmarkModalObj : BookmarkModal?
     
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        lblNewsAuthor.verticalAlignment = .top
-        imgVwNews.addBorders(edges: .bottom, color: .lightGray, inset: 0.0, thickness: 1.0)
+        setupInitialUi()
         
         setupNewsDescription()
     }
     
+    // MARK: - Local Methods
+    private func setupInitialUi() {
+        
+        lblNewsTitle.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        
+        lblNewsAuthor.verticalAlignment = .top
+        imgVwNews.addBorders(edges: .bottom, color: .lightGray, inset: 0.0, thickness: 1.0)
+        
+        btnBookmark .isHidden = false
+        layoutDescTxtvwBottom.constant = 50
+        
+        switch redirectFromWhichPage {
+        case "Headlines", "Everything":
+            checkWhetherThisNewsIsListedInBookmark()
+        case "Bookmark":
+            self.btnBookmark .tag = 2
+            self.btnBookmark .setTitle("Remove from Bookmarks", for: .normal)
+        default:
+            break
+        }
+    }
+    
+    func checkWhetherThisNewsIsListedInBookmark() {
+        let bookmodalObj = BookmarkModal()
+        let bIsPresent = bookmodalObj.checkWhetherThisNewsIsListedInBookmark(modalObj: newsModalObj!)
+        
+        self.btnBookmark .tag = 1
+        self.btnBookmark .setTitle("Bookmark This News", for: .normal)
+        if bIsPresent {
+            self.btnBookmark .tag = 2
+            self.btnBookmark .setTitle("Remove from Bookmarks", for: .normal)
+        }
+    }
+    
+    // MARK: - Unwrap Modal
     func setupNewsDescription() {
         
-        txtVwNewsDescription.text = newsModalObj?.articleDescription ?? "-- Description is not provided by source or by server --"
+        var imgUrlString = ""
         
-        lblNewsTitle.text = newsModalObj?.title
-        lblNewsAuthor.text = newsModalObj?.authorName
-        lblNewsSource.text = newsModalObj?.articleSourceName
-        lblNewsPublishedAt.text = newsModalObj?.publishedAt
+        switch redirectFromWhichPage {
+        case "Headlines", "Everything":
+            txtVwNewsDescription.text = newsModalObj?.articleDescription ?? "-- Description is not provided by source or by server --"
+            lblNewsTitle.text = newsModalObj?.title
+            lblNewsAuthor.text = newsModalObj?.authorName
+            lblNewsSource.text = newsModalObj?.articleSourceName
+            lblNewsPublishedAt.text = newsModalObj?.publishedAt
+            imgUrlString = (newsModalObj?.urlToImage)!
+        case "Bookmark":
+            txtVwNewsDescription.text = bookmarkModalObj?.articleDescription ?? "-- Description is not provided by source or by server --"
+            lblNewsTitle.text = bookmarkModalObj?.title
+            lblNewsAuthor.text = bookmarkModalObj?.authorName
+            lblNewsSource.text = bookmarkModalObj?.articleSourceName
+            lblNewsPublishedAt.text = bookmarkModalObj?.publishedAt
+            imgUrlString = (bookmarkModalObj?.urlToImage)!
+        default:
+            break
+        }
         
         // Check whether image url is valid or not. If not, set thumb and return it.
-        let imgUrlString = newsModalObj?.urlToImage
         imgVwNews.contentMode = .scaleAspectFit
         if !GlobalConstants.verifyUrl(urlString: imgUrlString) {
             imgVwNews.image = #imageLiteral(resourceName: "NoImage") // No Image
@@ -52,7 +107,7 @@ class DetailViewController: UIViewController {
         }
         
         // Download images in background thread asynchronously
-        if let imageUrl = URL(string: imgUrlString!) {
+        if let imageUrl = URL(string: imgUrlString) {
             DispatchQueue.global().async {
                 let data = try? Data(contentsOf: imageUrl) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
                 DispatchQueue.main.async {
@@ -68,6 +123,53 @@ class DetailViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    // MARK: - Button Action
+
+    @IBAction func bookmarkThisPage(_ sender: UIButton) {
+        
+        // Tag : 1 - title : "Bookmark this news"
+        // Tag : 2 - title : "Remove fom bookmark"
+        
+        switch sender.tag {
+        case 1:
+            let bookmodalObj = BookmarkModal()
+            let bIsSuccess = bookmodalObj.saveNewsInBookmarkTable(modalObj: newsModalObj!)
+            
+            if bIsSuccess {
+                GlobalConstants.showSuccessFailureAlertWithDismissHandler(title: GlobalConstants.readProductNameFromPlist(), message: "Saved to Bookmarks Successfully", okTitle: "Ok", controller: self) { (dismissed) in
+                    self.btnBookmark .tag = 2
+                    self.btnBookmark .setTitle("Remove from Bookmarks", for: .normal)
+                }
+            }
+        case 2:
+            let bookmodalObj = BookmarkModal()
+            
+            var bIsSuccess = false
+            if(newsModalObj != nil){
+                bIsSuccess = bookmodalObj.removeNewsFromBookmarkTable(modalObj: newsModalObj!)
+            }
+            else{
+                bIsSuccess = bookmodalObj.removeBookmarkThroughBookmarkList(modalObj: bookmarkModalObj!)
+            }
+            
+            //
+            if bIsSuccess {
+                GlobalConstants.showSuccessFailureAlertWithDismissHandler(title: GlobalConstants.readProductNameFromPlist(), message: "Removed from Bookmarks Successfully", okTitle: "Ok", controller: self) { (dismissed) in
+                    self.btnBookmark .tag = 1
+                    self.btnBookmark .setTitle("Bookmark This News", for: .normal)
+                    
+                    if(self.bookmarkModalObj != nil){
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                }
+            }
+            
+        default:
+            break
+        }
+        
         
     }
 }

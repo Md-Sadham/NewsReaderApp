@@ -29,6 +29,9 @@
 		E33055CC20B060AD0041CF5B /* TopAlignForMultilineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33055CB20B060AD0041CF5B /* TopAlignForMultilineLabel.swift */; };
 		E330C55C20AD2DB0003561D4 /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E330C55B20AD2DB0003561D4 /* NewsModel.swift */; };
 		E331097D20B2A16F0088BE1F /* CoreDataModal.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E331097B20B2A16F0088BE1F /* CoreDataModal.xcdatamodeld */; };
+		E331098220B2AD7B0088BE1F /* BookMarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E331098120B2AD7B0088BE1F /* BookMarkViewController.swift */; };
+		E331098420B2ADF40088BE1F /* BookmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E331098320B2ADF40088BE1F /* BookmarkCell.swift */; };
+		E331098620B2B74B0088BE1F /* BookmarkModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = E331098520B2B74B0088BE1F /* BookmarkModal.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +59,9 @@
 		E33055CB20B060AD0041CF5B /* TopAlignForMultilineLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopAlignForMultilineLabel.swift; sourceTree = "<group>"; };
 		E330C55B20AD2DB0003561D4 /* NewsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
 		E331097C20B2A16F0088BE1F /* CoreDataModal.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModal.xcdatamodel; sourceTree = "<group>"; };
+		E331098120B2AD7B0088BE1F /* BookMarkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookMarkViewController.swift; sourceTree = "<group>"; };
+		E331098320B2ADF40088BE1F /* BookmarkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkCell.swift; sourceTree = "<group>"; };
+		E331098520B2B74B0088BE1F /* BookmarkModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkModal.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +111,7 @@
 				E331097B20B2A16F0088BE1F /* CoreDataModal.xcdatamodeld */,
 				E33051BA20B1650200829567 /* SourcesModal.swift */,
 				E330C55B20AD2DB0003561D4 /* NewsModel.swift */,
+				E331098520B2B74B0088BE1F /* BookmarkModal.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -132,6 +139,7 @@
 		E33051BC20B1B4D100829567 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				E331098020B2AD7B0088BE1F /* Bookmark */,
 				E33051BD20B1B4D100829567 /* Top Headlines */,
 				E33051C020B1B4D100829567 /* Details View */,
 				E33051C220B1B4D100829567 /* Everything */,
@@ -193,6 +201,15 @@
 				E33051CD20B1B4D100829567 /* CustomPicker.swift */,
 			);
 			path = "Other Controllers";
+			sourceTree = "<group>";
+		};
+		E331098020B2AD7B0088BE1F /* Bookmark */ = {
+			isa = PBXGroup;
+			children = (
+				E331098120B2AD7B0088BE1F /* BookMarkViewController.swift */,
+				E331098320B2ADF40088BE1F /* BookmarkCell.swift */,
+			);
+			path = Bookmark;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,6 +291,8 @@
 				E33051D420B1B4D100829567 /* ConnectionManager.swift in Sources */,
 				E32D6D5020AFE948005DB382 /* AllExtensions.swift in Sources */,
 				E331097D20B2A16F0088BE1F /* CoreDataModal.xcdatamodeld in Sources */,
+				E331098420B2ADF40088BE1F /* BookmarkCell.swift in Sources */,
+				E331098220B2AD7B0088BE1F /* BookMarkViewController.swift in Sources */,
 				E31C289320AC821C00680492 /* Reachability.swift in Sources */,
 				E33051D820B1B4D100829567 /* CustomPicker.swift in Sources */,
 				E33051D620B1B4D100829567 /* MenuViewController.swift in Sources */,
@@ -285,6 +304,7 @@
 				E330C55C20AD2DB0003561D4 /* NewsModel.swift in Sources */,
 				E31C287220AC809300680492 /* AppDelegate.swift in Sources */,
 				E33051D320B1B4D100829567 /* WebServiceManager.swift in Sources */,
+				E331098620B2B74B0088BE1F /* BookmarkModal.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

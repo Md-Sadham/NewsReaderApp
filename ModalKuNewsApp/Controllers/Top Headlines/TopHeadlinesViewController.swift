@@ -332,6 +332,9 @@ class TopHeadlinesViewController: UIViewController {
         else if sectionIndex == 1 {
             self.tabBarController?.selectedIndex = 1
         }
+        else if sectionIndex == 2 {
+            self.tabBarController?.selectedIndex = 2
+        }
         
         checkBeforeRemoveChildView()
     }
@@ -573,6 +576,7 @@ extension TopHeadlinesViewController : UICollectionViewDelegate, UICollectionVie
         
         let storyboard = GlobalConstants.getMainStoryboardInstance()
         let controller = storyboard.instantiateViewController(withIdentifier: "DetailVcId") as! DetailViewController
+        controller.redirectFromWhichPage = "Headlines"
         controller.newsModalObj = arrArticlesList[indexPath.row]
         
         self.navigationController?.pushViewController(controller, animated: true)

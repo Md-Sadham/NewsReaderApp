@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14133" systemVersion="17E202" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <elements/>
+    <entity name="Bookmarks" representedClassName="Bookmarks" syncable="YES" codeGenerationType="class">
+        <attribute name="newsAuthor" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="newsDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="newsImageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="newsSourceName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="newsStringDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="newsTitle" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Bookmarks" positionX="-63" positionY="-18" width="128" height="135"/>
+    </elements>
 </model>
